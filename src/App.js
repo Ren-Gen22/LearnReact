@@ -1,17 +1,19 @@
-const Person = (props) => {
-  return (
-    <>
-      <h1>hello {props.name}</h1>
-      <h2>there {props.there}</h2>
-    </>
-  );
-};
+//hooks usestate
+import './App.css';
+import {useState,useEffect} from 'react';
 
 const App = () => {
+  const [counter,setCounter] =useState(0);
+
+  useEffect(()=>{
+    alert('changed'+counter)
+  },[counter]);
+
   return (
     <div className="App">
-      <Person name={'hehe'} />
-      <Person there="him"/>
+      <button onClick={()=> setCounter((prevCount)=>prevCount-1)}>-</button>
+      <h1>{counter}</h1>
+      <button onClick={()=> setCounter((prevCount)=>prevCount+1)}>+</button>
     </div>
   );
 };
