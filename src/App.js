@@ -1,25 +1,7 @@
-//hooks usestate
-import './App.css';
-import {useState,useEffect} from 'react';
-
-function Example() {
-
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}
+import React from "react";
 
 const App = () => {
-
-  return (
-    Example()  );
+  return <h1>App</h1>;
 };
 
 export default App;
