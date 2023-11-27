@@ -1,50 +1,56 @@
-import {useEffect} from "react";
-import './App.css'
-import SearchIcon from './search.svg'
-// const API_KEY = process.env.apikey;
-const API_url = 'http://www.omdbapi.com?apikey=26e820ef';
-const movie1={
-    "Title": "Spider-Man Title Reveal",
-    "Year": "2021",
-    "imdbID": "tt14122734",
-    "Type": "movie",
-    "Poster": "N/A"
-}
+import React, { useState, useEffect } from "react";
+
+import MovieCard from "./MovieCard";
+import SearchIcon from "./search.svg";
+import "./App.css";
+
+const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
 
 const App = () => {
-  const searchMovie=async(title)=>{
-    // console.log(API_KEY)
-    const response=await fetch(`${API_url}&s={title}`);
-    const data=await response.json();
-    console.log(data.Search);
-  }
-  useEffect(()=>{
-    
-    searchMovie('Spiderman');
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    searchMovies("Joker");
+  }, []);
+
+  const searchMovies = async (title) => {
+    const response = await fetch(`${API_URL}&s=${title}`);
+    const data = await response.json();
+
+    setMovies(data.Search);
+  };
+
   return (
     <div className="app">
-      <h1>Movies</h1>
+      <h1>MovieLand</h1>
+
       <div className="search">
-        <input placeholder="Search for movies" value="Superman" onChange={()=>{}}></input>
-        <img src={SearchIcon} alt="search" onClick={()=>{}}/>
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for movies"
+        />
+        <img
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchMovies(searchTerm)}
+        />
       </div>
 
-      <div className='container'>
-        <div className='movie'>
-          <div>
-            <p>{movie1.Year}</p>
-          </div>
-          <div>
-            <img src= {movie1.Poster !=='N/A' ? movie1.Poster :'https://via.placeholder.com/400'} alt={movie1.Title}/>
-          </div>
-
+      {movies?.length > 0 ? (
+        <div className="container">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
         </div>
-      </div>
-      
+      ) : (
+        <div className="empty">
+          <h2>No movies found</h2>
+        </div>
+      )}
     </div>
-  )
+  );
 };
 
 export default App;
- 
